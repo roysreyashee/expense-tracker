@@ -1,17 +1,34 @@
+import { useContext } from "react"
+import ExpenseChart from "./ExpenceChart"
+import { ExpenseContext } from "../../globalcontext/ExpenseContext"
+
 export default function SummaryCards() {
+
+    const {transactions} = useContext(ExpenseContext);
+    console.log(transactions)
+
+    const income = transactions.filter((item) => item.type === 'Income').reduce((acc,curr) => acc + curr.amount,0)
+
+    const expense = transactions.filter((item) => item.type === 'Expense').reduce((acc,curr) => acc + curr.amount, 0)
+
+    const balance = income - expense
+
     const cards = [
 
         {
-            title: 'Total Balance',
-            amount: '$5730.50'
+            title: 'Balance',
+            amount: `$${balance}`,
+            color: "text-slate-800"
         },
         {
-            title: 'Total Income',
-            amount: '$8500.00'
+            title: 'Income',
+            amount: `$${income}`,
+            color: "text-emerald-500"
         },
         {
-            title: 'Total Expense',
-            amount: '$2769.50'
+            title: 'Expense',
+            amount: `$${expense}`,
+            color: "text-red-500"
         }
 
     ]
