@@ -46,7 +46,7 @@ export default function TransactionForm() {
     const handleSubmit = (e) => {
 
         //Prevents page reload
-       //e.preventDefault()
+       e.preventDefault()
 
         const newTransaction = {
 
