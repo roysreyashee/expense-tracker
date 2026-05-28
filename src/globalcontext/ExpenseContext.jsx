@@ -8,6 +8,10 @@ export default function ExpenseProvider({children}) {
         return saved ? JSON.parse(saved) : []
     })
 
+    const [editTransactions, setEditTransactions] = useState(null)
+
+    
+
     useEffect(() => {
         localStorage.setItem('transactions', JSON.stringify(transactions))
     }, [transactions])
@@ -22,12 +26,28 @@ export default function ExpenseProvider({children}) {
         )
     }
 
+    const updateTransaction = (updatedItem) => {
+            const updateTransaction = transactions.map((item) => 
+                item.id === updatedItem.id
+                ? updatedItem
+                : item
+            )
+
+            setTransactions(updateTransaction);
+
+            //clear edit state
+            setEditTransactions(null)
+    }
+
     return(
         <ExpenseContext.Provider
         value={{
             transactions,
             addTransaction,
-            deleteTransaction
+            deleteTransaction,
+            updateTransaction,
+            editTransactions,
+            setEditTransactions,
         }}
         >
             {children}

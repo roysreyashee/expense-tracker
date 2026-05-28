@@ -1,10 +1,10 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ExpenseContext } from "../../globalcontext/ExpenseContext"
 
 export default function TransactionForm() {
 
     //Extracting addTransaction function from global context 
-    const {addTransaction} = useContext(ExpenseContext);
+    const {addTransaction, editTransactions, updateTransaction} = useContext(ExpenseContext);
 
     //local state for storing form input values
     const [formData, setFormData] = useState({
@@ -13,13 +13,22 @@ export default function TransactionForm() {
         //Transaction amount 
         amount: '',
         // default Transaction type
-        type: '',
+        type: 'Income',
         //default transaction category
         category: '',
         
         //Transaction date
         date: '',
     })
+
+    //Prefill form data
+    useEffect(()=> {
+
+        if(editTransactions){
+            setFormData(editTransactions)
+        }
+    
+    },[editTransactions])
 
     //Function to update form fields dynamically
     const handleChange = (e) => {
@@ -37,12 +46,14 @@ export default function TransactionForm() {
     const handleSubmit = (e) => {
 
         //Prevents page reload
-       // e.preventDefault()
+       //e.preventDefault()
 
         const newTransaction = {
 
             //unique ID using timestamp
-            id: Date.now(),
+            id: editTransactions
+  ? editTransactions.id
+  : Date.now(),
             //Spread all data of formData
             ...formData,
 
@@ -50,12 +61,21 @@ export default function TransactionForm() {
             amount: Number(formData.amount),
            
     }
-     //Adding transaction to the context API state
-     addTransaction(newTransaction);
+    //  //Adding transaction to the context API state
+    //  addTransaction(newTransaction);
+
+     //Edit Mode 
+     if(editTransactions){
+            updateTransaction(newTransaction);
+     }else{
+        //Add mode
+        addTransaction(newTransaction);
+     }
+
      //Clear the state after submission
      setFormData({
         title: '',
-        type: '',
+        type: 'Income',
         category: '',
         amount: '',
         date: ''
