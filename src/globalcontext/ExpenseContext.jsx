@@ -10,8 +10,16 @@ export default function ExpenseProvider({children}) {
 
     const [editTransactions, setEditTransactions] = useState(null)
 
-    
+    //Adding budget state in context 
+    const [budget, setBudget] = useState(() => {
+        const savedBudget = localStorage.getItem('budget');
 
+        return savedBudget ? JSON.parse(savedBudget) : 5000
+    })
+
+    useEffect(() => {
+        localStorage.setItem('budget',JSON.stringify(budget) )
+    }, [budget])
     useEffect(() => {
         localStorage.setItem('transactions', JSON.stringify(transactions))
     }, [transactions])

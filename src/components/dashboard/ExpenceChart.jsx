@@ -30,7 +30,7 @@ export default function ExpenseChart() {
 
   // Accessing transactions from Context API
   const { transactions } = useContext(ExpenseContext)
-
+ // console.log('Transaction', transactions)
   // =====================================================
   // FILTER ONLY EXPENSE TRANSACTIONS
   // =====================================================

@@ -109,7 +109,7 @@ export default function TransactionTable() {
                             <button
 
                                 onClick={() =>{
-                                    console.log('EDIT BUTTON WORKING')
+                                   // console.log('EDIT BUTTON WORKING')
                                     setEditTransactions(item)}
                                 }
 
