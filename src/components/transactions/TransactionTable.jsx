@@ -3,6 +3,7 @@ import Table from "../common/Table"
 import { ExpenseContext } from "../../globalcontext/ExpenseContext"
 import Searchbar from "../common/Searchbar";
 import FilterDropdown from "../common/FilterDropdown";
+import { ArrowDownLeft, ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 const data = [
     {
         title: "Groceries",
@@ -87,13 +88,22 @@ export default function TransactionTable() {
                         <td className="py-4 px-2 font-medium text-slate-700">
                             {item.title}
                         </td>
-                        <td className="py-4 px-2">
+                        {/* <td className="py-4 px-2">
                             <span className="bg-emerald-100 text-emerald-600 text-xs px-3 py-1 rounded-full font-medium">
                                 {item.category}
                             </span>
-                        </td>
+                        </td> */}
                         <td className="py-4 px-2">
-                            {item.type}
+                            <span className={`${item.type === 'Expense' ? 'bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full font-medium' : 'bg-emerald-100 text-emerald-600 text-xs px-3 py-1 rounded-full font-medium'}`}>
+                                {item.category}
+                            </span>
+                        </td>
+                        <td className="py-4 px-2 flex gap-2">
+                            
+                            <div>{item.type}</div>
+                            
+                            {item.type === 'Expense' ? <ArrowUpRight className="text-red-600" size ={20} /> : <ArrowDownLeft className="text-green-600"
+                                size={20} />}
                         </td>
                         <td
                             className={`py-4 px-2 font-semibold ${item.type === 'Expense'
